@@ -49,9 +49,14 @@ MeASite 是一个 Java EE 企业级快速开发平台，基于经典技术组合
 
 * **MeASite 1.0.0 开发环境部署运行调试（idea）**
 
-
-
-
+3.项目展示
+ 3.1登录
+![输入图片说明](https://gitee.com/uploads/images/2018/0311/202142_a1bab20b_1809807.jpeg "login_Jc.jpg")
+ 3.2 首页
+ ![输入图片说明](https://gitee.com/uploads/images/2018/0311/202315_f74fa7c1_1809807.png "页面.png")
+3.3
+ 登录账号admin/123456
+ 
 # 关于授权协议声明
 
 1. 当前开源代码的授权协议采用 AGPL v3 + Apache Licence v2 进行发行。
@@ -64,3 +69,5 @@ MeASite 是一个 Java EE 企业级快速开发平台，基于经典技术组合
 #
 ``
 QQ交流群： 729991152
+
+![输入图片说明](https://gitee.com/uploads/images/2018/0311/202340_a9ff75af_1809807.png "MeASite群二维码.png")
