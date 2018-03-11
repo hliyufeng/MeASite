@@ -31,8 +31,8 @@ MeASite 是一个 Java EE 企业级快速开发平台，基于经典技术组合
 
 2、前端
 
-* JS框架：jQuery
-* 客户端验证：JQuery Validation 
+* JS框架：layui
+* 客户端验证：layui Validation 
 * 富文本在线编辑：UEditor
 * 前端：layui
 * 数据表格：bootstrapTable
