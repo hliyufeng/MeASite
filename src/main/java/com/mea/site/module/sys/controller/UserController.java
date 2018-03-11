@@ -219,7 +219,7 @@ public class UserController extends BaseController {
             String oldPasswordMd5 = EndecryptUtils.md5Password(user.getLoginName(), oldPassword, 2, user.getCredentialsSalt());
             if (oldPasswordMd5.equals(user.getPassword())) {
                 User user1 = EndecryptUtils.md5Password(user.getLoginName(), newPassword, 2);
-                systemService.updatePasswordById(user.getId(), user.getLoginName(), newPassword, user1.getCredentialsSalt());
+                systemService.updatePasswordById(user.getId(), user.getLoginName(), user1.getPassword(), user1.getCredentialsSalt());
                 return ResponseEntity.build().OK("修改密码成功");
             } else {
                 return ResponseEntity.build().fail("修改密码失败，旧密码错误");
