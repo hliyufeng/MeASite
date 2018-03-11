@@ -1,0 +1,37 @@
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body style="background: #F0F2F5;">
+<div class="measite-content-body">
+    <div class="measite-card measite-card-wider-padding measite-card-padding-transition">
+        <div class="measite-card-body">
+            <div class="measite-toolbar">
+                <button type="button"
+                        class="layui-btn" title="批量生成" onclick="add()">
+                    <i class="layui-icon">&#xe654;</i>批量生成
+                </button>
+            </div>
+            <input type="hidden" th:value="${tableName}">
+            <div class="measite-conten-body-panel">
+                <div class="layui-row">
+                    <div class="layui-col-md12">
+                        <table id="measitetable" class="layui-hide" lay-filter="measitetoolbarfiter">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script type="text/html" id="operationTpl">
+    <a class="layui-btn  layui-btn-sm" lay-event="eye"><i class="fa fa-eye measite-icon"></i></a>
+    <a class="layui-btn layui-btn-normal layui-btn-sm " lay-event="download"><i class="layui-icon">&#xe601;</i></a>
+</script>
+<script th:inline="javascript">
+    var tableName  =   /*[[${tableName}]]*/;
+</script>
+<script type="text/javascript" th:src="@{/js/appjs/gen/column.js}"></script>
+</body>
+</html>

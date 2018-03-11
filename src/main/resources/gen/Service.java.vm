@@ -1,0 +1,24 @@
+package ${package}.service;
+
+import com.mea.site.common.base.service.BaseService;
+import com.mea.site.common.base.service.CrudService;
+import ${package}.mapper.${className}Mapper;
+import ${package}.model.${className};
+
+import com.google.common.collect.Lists;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * /**
+ * ${comments}
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+ */
+@Service
+public class ${className}Service extends CrudService<${className}, ${className}Mapper> {
+
+}

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body style="background: #F0F2F5;">
+<div th:include="include :: treecss"></div>
+<div class="measite-content layui-card">
+    <form class="layui-form" id="sbForm">
+        <div class="layui-form-item">
+            <label class="layui-form-label">上级机构:<font
+                    class="glad_star">&nbsp;*</font>&nbsp;</label>
+            <div class="layui-input-block">
+                <input mea-input='tree'
+                       th:attr="mea-input-param=|{url:'/sys/office/treeData',name:'parent.id',value:'${office.parent == null ? '':office.parent.id}',labelValue:'${office.parent == null ? '':office.parent.name}',id:'office',labelName:'parent.name',title:'机构',extId:'${office.id}',placeholder:'请选择机构'}|">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <input id="id" type="hidden" name="id" th:value="${office.id}">
+            <label class="layui-form-label">归属区域:<font
+                    class="glad_star">&nbsp;*</font>&nbsp;</label>
+            <div class="layui-input-block">
+                <input mea-input='tree'
+                       th:attr="mea-input-param=|{url:'/sys/area/treeData',name:'area.id',value:'${office.area.id}',labelValue:'${office.area.name}',id:'area',labelName:'area.name',title:'机构',placeholder:'请选择机构'}|">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">机构名称:<font
+                    class="glad_star">&nbsp;*</font>&nbsp;</label>
+            <div class="layui-input-block">
+                <input class="layui-input" name="name" th:value="${office.name}" lay-verify="required" maxlength="50"
+                       placeholder="机构名称" style="width: 250px;"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">机构编码:<font
+                    class="glad_star">&nbsp;*</font></label>
+            <div class="layui-input-block" style="width: 250px;">
+                <input class="layui-input" name="code" th:value="${office.code}" maxlength="50" lay-verify="required"
+                       placeholder="机构编码" style="width: 250px;"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">机构类型:&nbsp;</label>
+            <div class="layui-input-block" style="width: 250px;">
+                <select name="type">
+                    <option th:each="dict:${sysOfficeType}" th:text="${dict.label}" th:value="${dict.value}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">机构级别:&nbsp;</label>
+            <div class="layui-input-block" style="width: 250px;">
+                <select name="grade">
+                    <option th:each="dict:${sysOfficeGrade}" th:text="${dict.label}" th:value="${dict.value}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否可用:&nbsp;</label>
+            <div class="layui-input-block" style="width: 250px;">
+                <select name="useable">
+                    <option th:each="dict:${sysData}" th:text="${dict.label}" th:value="${dict.value}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">联系地址:&nbsp;</label>
+            <div class="layui-input-block">
+                <input class="layui-input" name="address" th:value="${office.address}" maxlength="50"
+                        placeholder="联系地址" style="width: 250px;"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮政编码:&nbsp;</label>
+            <div class="layui-input-block">
+                <input class="layui-input" name="zipCode" th:value="${office.zipCode}" maxlength="50" placeholder="邮政编码"  style="width: 250px;"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">负责人:&nbsp;</label>
+            <div class="layui-input-block">
+                <input class="layui-input" name="master" th:value="${office.master}" maxlength="50"  placeholder="负责人"  style="width: 250px;"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">电话:&nbsp;</label>
+            <div class="layui-input-block">
+                <input class="layui-input" name="phone" th:value="${office.phone}" maxlength="50"  placeholder="电话"  style="width: 250px;"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">传真:&nbsp;</label>
+            <div class="layui-input-block">
+                <input class="layui-input" name="fax" th:value="${office.fax}" maxlength="50"  placeholder="传真"  style="width: 250px;"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱:&nbsp;</label>
+            <div class="layui-input-block">
+                <input class="layui-input" name="email" th:value="${office.email}" maxlength="50"  placeholder="邮箱"  style="width: 250px;"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">备注:</label>
+                <div class="layui-input-inline">
+                    <textarea placeholder="备注" th:value="${office.remarks}" name="remarks" class="layui-textarea"
+                              style="width: 250px;"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item" th:if="${office.id}">
+            <div class="layui-inline">
+                <label class="layui-form-label">快速添加下级部门:</label>
+                <div class="layui-input-inline">
+                    <input type="hidden" name="childDeptList" id="childDeptList">
+                    <input type="checkbox"   name="childDepts" th:each="office:${sysOfficeCommon}" th:value="${office.value}" th:title="${office.label}" lay-skin="primary">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button shiro:hasAllPermissions="sys:office:save,sys:office:update" class="layui-btn" lay-submit type="submit" lay-filter="form">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+<div th:include="include :: footer"></div>
+<div th:include="include :: treejs"></div>
+<script type="text/javascript" th:src="@{/js/appjs/sys/office/form.js}"></script>
+</body>
+</html>

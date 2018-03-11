@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="childrenBody">
+<div class="measite-content layui-card">
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">键值:<font
+                    class="glad_star">&nbsp;*</font>&nbsp;</label>
+            <div class="layui-input-block">
+                <input th:value="${dict.id}" name="id" type="hidden"/>
+                <input ype="text" class="layui-input" name="value" th:value="${dict.value}" lay-verify="required" placeholder="键值"  style="width: 250px;">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">标签:<font
+                    class="glad_star">&nbsp;*</font>&nbsp;</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" th:value="${dict.label}" name="label" lay-verify="required" placeholder="标签"  style="width: 250px;">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型:<font
+                    class="glad_star">&nbsp;*</font>&nbsp;</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" th:value="${dict.type}" name="type" lay-verify="required" placeholder="类型"  style="width: 250px;">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">描述:<font
+                    class="glad_star">&nbsp;*</font>&nbsp;</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input"  th:value="${dict.description}" name="description" lay-verify="required" placeholder="描述"  style="width: 250px;">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序:</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" th:value="${dict.sort}" lay-verify="required|number" name="sort" placeholder="排序" style="width: 250px;">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">备注:</label>
+                <div class="layui-input-inline">
+                    <textarea placeholder="备注" class="layui-textarea" th:value="${dict.remarks}" name="remarks" style="width: 250px;"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button shiro:hasPermission="sys:dict:update" class="layui-btn" lay-submit="" lay-filter="edit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div th:include="include :: footer"></div>
+<script type="text/javascript" th:src="@{/js/appjs/sys/dict/edit.js}"></script>
+</body>
+</html>

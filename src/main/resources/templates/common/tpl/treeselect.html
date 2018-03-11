@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header">
+</head>
+<body style="background: #ffffff;">
+<div th:include="include :: treecss"></div>
+<div id="tree" class="ztree" style="margin: 0 30px;margin-top:10px;"></div>
+<div style="position:fixed;bottom:0;text-align: center;background: #EEEEEE;margin:0 auto;left: 0;right: 0;padding: 5px 0;"
+     class="layui-card">
+    <button class="layui-btn layui-btn-sm" id="enterId">确定</button>
+    <button class="layui-btn layui-btn-primary layui-btn-sm" id="canceltree">关闭</button>
+</div>
+<div th:include="include :: footer"></div>
+<div th:include="include :: treejs"></div>
+
+<script th:inline="javascript">
+    var url = /*[[${url}]]*/;
+    var checked = /*[[${checked}]]*/;
+    var extId =  /*[[${extId}]]*/;
+    var isAll = /*[[${isAll}]]*/;
+    var idN = /*[[${idN}]]*/;
+    var index = /*[[${index}]]*/;
+    var isOpen =  /*[[${isOpen}]]*/;
+    var tree, setting = {
+        view: {selectedMulti: false, dblClickExpand: false}, check: {enable: checked, nocheckInherit: true},
+        data: {simpleData: {enable: true}}, callback: {
+            onClick: function (event, treeId, treeNode) {
+                tree.expandNode(treeNode);
+            }, onCheck: function (e, treeId, treeNode) {
+                var nodes = tree.getCheckedNodes(true);
+                for (var i = 0, l = nodes.length; i < l; i++) {
+                    tree.expandNode(nodes[i], true, false, false);
+                }
+                return false;
+            }, onAsyncSuccess: function (event, treeId, treeNode, msg) {
+                var nodes = tree.getNodesByParam("pId", treeNode.id, null);
+                for (var i = 0, l = nodes.length; i < l; i++) {
+                    try {
+                        tree.checkNode(nodes[i], treeNode.checked, true);
+                    } catch (e) {
+                    }
+                }
+            }, onDblClick: function () {
+                if (!checked) {
+                    if(MeA.isNotEmpty(idN)){
+                        parent.MeA.selectTree.oktree(tree,idN,checked,index);
+                    }else{
+                        parent.oktree(tree)
+                    }
+
+                }
+            }
+        }
+    };
+
+    $(document).ready(function () {
+        var params = {extId: extId, isAll: isAll, t: new Date().getTime()}
+        $.get(urlparam(url, params), function (zNodes) {
+            // 初始化树结构
+            tree = $.fn.zTree.init($("#tree"), setting, zNodes);
+            // 默认展开一级节点
+            var nodes = tree.getNodesByParam("level", 0);
+            if(isOpen == 'false'){
+            for (var i = 0; i < nodes.length; i++) {
+                tree.expandNode(nodes[i], true, false, false);
+            }
+            }
+            //异步加载子节点（加载用户）
+            var nodesOne = tree.getNodesByParam("isParent", true);
+            for (var j = 0; j < nodesOne.length; j++) {
+                tree.reAsyncChildNodes(nodesOne[j], "!refresh", true);
+            }
+        });
+
+    });
+
+
+    //隐藏所有节点
+    function hideAllNode(nodes) {
+        nodes = tree.transformToArray(nodes);
+        for (var i = nodes.length - 1; i >= 0; i--) {
+            tree.hideNode(nodes[i]);
+        }
+    }
+
+    //显示所有节点
+    function showAllNode(nodes) {
+        nodes = tree.transformToArray(nodes);
+        for (var i = nodes.length - 1; i >= 0; i--) {
+            if (nodes[i].getParentNode() != null) {
+                tree.expandNode(nodes[i], false, false, false, false);
+            } else {
+                tree.expandNode(nodes[i], true, true, false, false);
+            }
+            tree.showNode(nodes[i]);
+            showAllNode(nodes[i].children);
+        }
+    }
+
+    //更新节点状态
+    function updateNodes(nodeList) {
+        tree.showNodes(nodeList);
+        for (var i = 0, l = nodeList.length; i < l; i++) {
+
+            //展开当前节点的父节点
+            tree.showNode(nodeList[i].getParentNode());
+            //tree.expandNode(nodeList[i].getParentNode(), true, false, false);
+            //显示展开符合条件节点的父节点
+            while (nodeList[i].getParentNode() != null) {
+                tree.expandNode(nodeList[i].getParentNode(), true, false, false);
+                nodeList[i] = nodeList[i].getParentNode();
+                tree.showNode(nodeList[i].getParentNode());
+            }
+            //显示根节点
+            tree.showNode(nodeList[i].getParentNode());
+            //展开根节点
+            tree.expandNode(nodeList[i].getParentNode(), true, false, false);
+        }
+    }
+
+    $("#enterId").click(function () {
+        var nodes = null;
+        if (checked == "true") {
+            nodes = tree.getCheckedNodes();
+        } else {
+            nodes = tree.getSelectedNodes();
+        }
+        if (!checked) {
+            console.log(idN);
+            if(MeA.isNotEmpty(idN)){
+                parent.MeA.selectTree.oktree(tree,idN,checked,index);
+            }else{
+                parent.oktree(tree)
+            }
+
+        }
+
+    });
+
+    $("#canceltree").click(function(){
+        canceltree();
+    });
+    function canceltree() {
+        if(MeA.isNotEmpty(idN)) {
+            parent.MeA.selectTree.canceltree(idN);
+        }else{
+            parent.canceltree();
+        }
+    }
+</script>
+</body>
+</html>

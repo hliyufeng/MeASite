@@ -1,0 +1,135 @@
+var prefix = "/${pathName}/${classname}"
+$(document).ready(function () {
+    load();
+});
+function load() {
+    layui.use(['table', 'layer', 'laytpl'], function () {
+        var table = layui.table, layer = layui.layer, laytpl = layui.laytpl;
+        //生成数据表格
+        table.render({
+            elem: '#measitetable'
+            , url: prefix + '/list' //数据接口
+            , method: 'post'
+            , even: true
+            , response: responseParam
+            , request: requestParam
+            , loading: true
+            , cols: [[ //表头
+                {title: '序号', width: 80, type: 'numbers'},
+                #foreach($column in $columns)
+                    {
+                        field : '${column.attrname}',
+                        title : '${column.comments}'
+                    },
+                #end
+                {title: '操作', align: 'center', toolbar: '#operationTpl', width: 200}
+            ]]
+        });
+
+        //编辑时间
+        table.on('tool(measitetoolbarfiter)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'edit') {
+                edit(data.jsid);
+            } else if (obj.event === 'del') {
+                remove(data.jsid, table);
+            }
+
+        });
+    });
+}
+function reLoad() {
+    layui.use('table', function () {
+        var table = layui.table;
+        table.reload("measitetable")
+    })
+
+}
+function add() {
+    layer.open({
+        type: 2,
+        title: '新增',
+        maxmin: true,
+        fixed: true,
+        area: ['800px', '520px'],
+        shadeClose: true, // 点击遮罩关闭层
+        content: prefix + '/add
+    });
+}
+
+function edit(id) {
+    layer.open({
+        type: 2,
+        title: '编辑',
+        maxmin: true,
+        shadeClose: false, // 点击遮罩关闭层
+        area: ['800px', '520px'],
+        content: prefix + '/edit?id=' + id// iframe的url
+    });
+}
+
+function remove(id) {
+    layer.confirm('确定要删除选中的记录？', {
+        btn: ['确定', '取消']
+    }, function () {
+        $.ajax({
+            url: prefix + "/delete",
+            data: {id: id},
+            type: "post",
+            success: function (data) {
+                if (data.code == '200') {
+                    layer.msg(data.msg);
+                    reLoad();
+                }else{
+                    layer.msg(r.msg);
+                }
+            }
+        });
+    })
+}
+
+function batchRemove() {
+    layui.use('table', function () {
+        var table = layui.table;
+        var checkStatus = table.checkStatus('measitetable');
+        var rows = checkStatus.data;
+        // 返回所有选择的行，当没有选择的记录时，返回一个空数组
+        if (rows.length == 0) {
+            layer.msg("请选择要删除的数据");
+            return;
+        }
+        layer.confirm("确认要删除选中的'" + rows.length + "'条数据吗?", {
+                btn: ['确定', '取消']
+            }, function () {
+                var ids = new Array();
+                $.each(rows, function (i, row) {
+                    ids[i] = row['${pk.attrname}'];
+                });
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        "ids": ids
+                    },
+                    url: prefix + '/batchRemove',
+                    success: function (r) {
+                        if (r.code == 200) {
+                            table.reload("measitetable")
+                            layer.msg(r.msg);
+
+                        } else {
+                            layer.msg(r.msg);
+                        }
+                    }
+                });
+
+            }
+            ,
+            function () {
+            });
+
+    });
+}
+
+
+
+

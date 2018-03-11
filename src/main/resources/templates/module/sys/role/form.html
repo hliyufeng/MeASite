@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body style="background: #F0F2F5;">
+<div th:include="include :: treecss"></div>
+<div class="measite-content layui-card">
+    <form class="layui-form" id="sbForm">
+        <div class="layui-form-item">
+            <label class="layui-form-label">归属机构:<font
+                    class="glad_star">&nbsp;*</font>&nbsp;</label>
+            <div class="layui-input-block">
+                <input mea-input='tree'
+                       th:attr="mea-input-param=|{url:'/sys/office/treeData',id:'office',name:'office.id',value:'${role.office == null ? '':role.office.id}',labelValue:'${role.office.name == null ? '':role.office.name}',labelName:'office.name',title:'机构',placeholder:'请选择机构'}|">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色名称:<font
+                    class="glad_star">&nbsp;*</font>&nbsp;</label>
+            <div class="layui-input-block">
+                <input id="id" type="hidden" name="id" th:value="${role.id}">
+                <input id="oldName" name="oldName" type="hidden" th:value="${role.name}">
+                <input class="layui-input" name="name" th:value="${role.name}" maxlength="50" lay-verify="required|name" placeholder="角色名称"  style="width: 250px;"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">英文名称:<font
+                    class="glad_star">&nbsp;*</font>&nbsp;</label>
+            <div class="layui-input-block">
+                <input id="oldEnname" name="oldEnname" type="hidden" th:value="${role.enname}">
+                <input id="enname" name="enname" type="text" lay-verify="required|enname" class="layui-input" th:value="${role.enname}"  placeholder="英文名称" style = 'width:250px;'>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色类型:</label>
+            <div class="layui-input-inline">
+                <select name="roleType" id="roleType" >
+                    <option value="assignment">任务分配</option>
+                    <option value="security-role">管理角色</option>
+                    <option value="user">普通角色</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">是否系统数据:</label>
+                <div class="layui-input-inline">
+                    <select id="sysData" name="sysData">
+                        <option  th:each="dict:${sysDataList}" th:value="${dict.value}" th:text="${dict.label}" th:selected="${dict.value==role.sysData}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">是否可用:</label>
+                <div class="layui-input-inline">
+                    <select id="useable" name="useable">
+                        <option  th:each="dict:${sysDataList}" th:value="${dict.value}" th:text="${dict.label}" th:selected="${dict.value==role.useable}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">是否可分配:</label>
+                <div class="layui-input-inline">
+                    <select id="useable" name="isDistribution">
+                        <option  th:each="dict:${sysDataList}" th:value="${dict.value}" th:text="${dict.label}" th:selected="${dict.value==role.isDistribution}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">是否可授权:</label>
+                <div class="layui-input-inline">
+                    <select id="useable" name="isAuth">
+                        <option  th:each="dict:${sysDataList}" th:value="${dict.value}" th:text="${dict.label}" th:selected="${dict.value==role.isAuth}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">数据范围:</label>
+                <div class="layui-input-inline">
+                    <select id="dataScope" name="dataScope" lay-filter="dataScopeFilter">
+                        <option  th:each="dict:${sysDataScopeList}" th:value="${dict.value}" th:text="${dict.label}" th:selected="${dict.value==role.dataScope}"></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">角色授权:</label>
+                <div class="layui-input-inline">
+                    <div id="menuTree" class="ztree" style="margin-top:3px;float:left;"></div>
+                </div>
+                <input type="hidden" name="menuIds" id="menuIds" th:value="${role.menuIds}">
+                <div class="layui-input-inline">
+                    <div id="officeTree" class="ztree" style="margin-top:3px;float:left;"></div>
+                    <input type="hidden" name="officeIds" id="officeIds" th:value="${role.officeIds}">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button  shiro:hasAllPermissions="sys:role:save,sys:role:update" class="layui-btn" lay-submit type="submit" lay-filter="form">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+<div th:include="include :: footer"></div>
+<div th:include="include :: treejs"></div>
+<script type="text/javascript" th:src="@{/js/appjs/sys/role/form.js}"></script>
+</body>
+</html>

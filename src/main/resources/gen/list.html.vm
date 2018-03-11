@@ -1,0 +1,24 @@
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body style="background: #F0F2F5;">
+<div class="measite-content-body">
+    <div class="measite-card measite-card-wider-padding measite-card-padding-transition">
+        <div class="measite-card-body">
+            <div class="measite-toolbar">
+                <button shiro:hasPermission="${pathName}:${classname}:add" class="layui-btn" data-type="getCheckData" id="add"><i class="layui-icon">&#xe654;</i>新增</button>
+                <button shiro:hasPermission="${pathName}:${classname}:batchRemove" class="layui-btn layui-btn-danger" id="delAll"><i class="layui-icon">&#xe640;</i>删除</button>
+            </div>
+
+            <div class="measite-conten-body-panel">
+                <table id="measitetable" class="layui-hide" lay-filter="measitetoolbarfiter">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script type="text/javascript" th:src="@{/js/appjs/${pathName}/${classname}/${classname}.js}"></script>
+</body>
+</html>

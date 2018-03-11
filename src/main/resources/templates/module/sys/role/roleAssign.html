@@ -1,0 +1,61 @@
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body style="background: #F0F2F5;">
+<div class="measite-content-body">
+    <div class="measite-card measite-card-wider-padding measite-card-padding-transition">
+        <div class="measite-card-body">
+            <div>
+                <table class="layui-table measite-pane" style="border: 0;">
+                    <tbody>
+                    <tr>
+                        <td width="60px;">角色名称:</td>
+                        <td th:text="${role.name}"></td>
+                        <td width="60px;">归属机构:</td>
+                        <td th:text="${role.office.name}"></td>
+                        <td width="60px;">英文名称:</td>
+                        <td th:text="${role.enname}"></td>
+                    </tr>
+                    <tr>
+                        <td width="60px;">角色类型:</td>
+                        <td th:text="${role.roleType}"></td>
+                        <td width="60px;">数据范围:</td>
+                        <td th:text="${role.dataScopeLable}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="measite-toolbar">
+                <button type="button" shiro:hasPermission="sys:role:usertorole"
+                        class="layui-btn" title="分配角色" onclick="add()">
+                    <i class="layui-icon">&#xe612;</i>分配角色
+                </button>
+            </div>
+
+            <div class="measite-conten-body-panel">
+                <div class="layui-row">
+                    <div class="layui-col-md12">
+                        <table id="measitetable" class="layui-hide" lay-filter="measitetoolbarfiter">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script type="text/javascript">
+    var s_role_assign= 'layui-hide';
+</script>
+<div shiro:hasPermission="sys:role:outrole">
+    <script type="text/javascript">
+        s_role_assign = '';
+    </script>
+</div>
+<script type="text/javascript" th:src="@{/js/appjs/sys/role/roleAssign.js}"></script>
+<script th:inline="javascript">
+    var idp = /*[[${role.id}]]*/;
+</script>
+</body>
+</html>

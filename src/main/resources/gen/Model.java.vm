@@ -1,0 +1,20 @@
+package ${package}.model;
+
+        import lombok.AllArgsConstructor;
+        import lombok.NoArgsConstructor;
+
+
+/**
+ * 用户Entity
+ *
+ * @author Michaeljou
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ${className} extends DataEntity<${className}> {
+    #foreach ($column in $columns)
+    //$column.comments
+    private $column.attrType $column.attrname;
+    #end
+}

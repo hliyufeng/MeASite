@@ -1,0 +1,142 @@
+package ${package}.controller;
+
+import com.feilong.core.Validator;
+import com.mea.site.common.annotation.Log;
+import com.mea.site.common.base.controller.BaseController;
+import com.mea.site.common.config.constants.Constant;
+import com.mea.site.common.response.ResponseEntity;
+import com.mea.site.common.utils.ShiroUtils;
+import com.mea.site.common.utils.StringUtils;
+import com.mea.site.common.utils.WebUtils;
+
+import ${package}.model.${className};
+import ${package}.service.${className}Service;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by lenovo on 2018/2/27.
+ */
+@Controller
+@Slf4j
+@RequestMapping(value = "/${pathName}/${classname}")
+public class ${className}Controller extends BaseController {
+
+    private String prefix = "/${pathName}/${classname}";
+
+    @Autowired
+    private ${className}Service ${classname}Service;
+
+
+    @GetMapping(value = {"/", ""})
+    String${className}() {
+        return WebUtils.requireView(prefix + "/${classname}");
+    }
+
+
+    /**
+     * 列表数据
+     *
+     * @param role
+     * @param model
+     * @return
+     */
+    @PostMapping(value = {"list"})
+    @ResponseBody
+    public ResponseEntity list(${className} ${classname}) {
+        PageInfo<${className}> list = ${classname}Service.findPage(page.put(${classname}));
+        return ResponseEntity.build().OK().calPage(list);
+    }
+
+    /**
+     * 新增
+     *
+     * @param model
+     * @return
+     */
+    @RequiresPermissions("${pathName}:${classname}:add")
+    @RequestMapping("/add")
+    String add() {
+        return WebUtils.requireView(prefix + "/add");
+    }
+
+
+    @RequiresPermissions("${pathName}:${classname}:edit")
+    @RequestMapping("/edit")
+    String edit() {
+        return WebUtils.requireView(prefix + "/edit");
+    }
+
+    /**
+ * 保存
+ */
+    @ResponseBody
+    @PostMapping("/save")
+    @RequiresPermissions("${pathName}:${classname}:add")
+    public ResponseEntity save(${className} ${classname}) {
+        if (!beanValidator(${classname}) && ${classname}Service.insert(${classname}, false) <= 0) {
+            return ResponseEntity.build().fail(Constant.SAVE_FAIL);
+        }
+        return ResponseEntity.build().OK(Constant.SAVE_SUCCESS);
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/update")
+    @RequiresPermissions("${pathName}:${classname}:edit")
+    public ResponseEntity update(${className}DO ${classname}) {
+        if (!beanValidator(${classname}) && ${classname}Service.updateByPrimaryKeySelective(${classname}, false) <= 0) {
+            return ResponseEntity.build().fail(Constant.SAVE_FAIL);
+        }
+        return ResponseEntity.build().OK(Constant.SAVE_SUCCESS);
+    }
+
+    /**
+ * 删除
+ */
+    @PostMapping("/remove")
+    @ResponseBody
+    @RequiresPermissions("${pathName}:${classname}:remove")
+    public R remove( ${pk.attrType} ${pk.attrname}) {
+        if (${classname}Service.remove(${pk.attrname}) > 0) {
+            return R.ok();
+        }
+        return R.error();
+    }
+
+    @Log("删除菜单")
+    @RequiresPermissions("${pathName}:${classname}:delete")
+    @PostMapping(value = "delete")
+    @ResponseBody
+    public ResponseEntity delete(${pk.attrType} ${pk.attrname}) {
+        boolean isSuccess = ${classname}Service.delete(${pk.attrname}, false);
+        if (isSuccess) {
+            return ResponseEntity.build().OK(Constant.DEL_SUCCESS);
+        }
+        return ResponseEntity.build().fail(Constant.DEL_FAIL);
+    }
+
+
+    /**
+    * 批量删除
+    *
+    */
+    @PostMapping("/batchRemove")
+    @ResponseBody
+    @RequiresPermissions("${pathName}:${classname}:batchRemove")
+    public R remove(@RequestParam("ids[]") ${pk.attrType}[]${pk.attrname}s) {
+            ${classname}Service.batchRemove(${pk.attrname}s);
+        return ResponseEntity.build().OK(Constant.DEL_SUCCESS);
+    }
+}

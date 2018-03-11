@@ -1,0 +1,53 @@
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: boostrapTreeCssHeader"></head>
+<body style="background: #F0F2F5;">
+<div class="measite-content-body">
+    <div class="measite-card measite-card-wider-padding measite-card-padding-transition">
+        <div class="measite-card-body">
+            <div class="measite-toolbar">
+                <button type="button"  shiro:hasPermission="sys:office:add"
+                        class="layui-btn" title="在根节点下添加机构" onclick="add()">
+                    <i class="layui-icon">&#xe654;</i>新增
+                </button>
+            </div>
+
+            <div class="measite-conten-body-panel">
+                <table id="officeTable" data-mobile-responsive="true">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include :: boostrapTreeJsFooter"></div>
+<script type="text/javascript">
+    var s_add_h = 'layui-hide';
+    var s_edit_h = 'layui-hide';
+    var s_remove_h = 'layui-hide';
+</script>
+<div shiro:hasPermission="sys:office:add">
+    <script type="text/javascript">
+        s_add_h = '';
+    </script>
+</div>
+<div shiro:hasPermission="sys:office:edit">
+    <script type="text/javascript">
+        s_edit_h = '';
+    </script>
+</div>
+<div shiro:hasPermission="sys:office:delete">
+    <script type="text/javascript">
+        var s_remove_h = '';
+    </script>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+       var dicJson = /*[[${sysOfficeType}]]*/
+
+
+    /*]]>*/
+</script>
+<script type="text/javascript" th:src="@{/js/appjs/sys/office/office.js}"></script>
+</body>
+</html>

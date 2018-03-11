@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="childrenBody">
+<div class="measite-content layui-card">
+    <form class="layui-form">
+        <input id="{pk.columnName}" name="{pk.columnName}" type="hidden" th:value="${${classname}.${pk.columnName}}">
+        #foreach($column in $columns)
+            #if($column.columnName != $pk.columnName)
+                <div class="layui-form-item">
+                    <label class="layui-form-label">${column.comments}:</label>
+                    <div class="layui-input-block">
+                        <input id="${column.attrname}" name="${column.attrname}" th:value="${${classname}.${column.attrname}}" placeholder="${column.comments}" type="text">
+                    </div>
+                </div>
+            #end
+        #end
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="edit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div th:include="include :: footer"></div>
+<script type="text/javascript" th:src="@{/js/appjs/${pathName}/${classname}/edit.js}"></script>
+</body>
+</html>

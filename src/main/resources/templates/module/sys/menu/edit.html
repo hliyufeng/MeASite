@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body class="childrenBody">
+<div class="measite-content layui-card">
+    <form class="layui-form">
+        <input id="id" name="id" type="hidden"
+               th:value="${menu.id}">
+        <div class="layui-form-item">
+            <label class="layui-form-label">上级菜单:</label>
+            <div class="layui-input-block">
+                <input mea-input='tree'
+                       th:attr="mea-input-param=|{url:'/sys/menu/treeData',id:'menu',name:'parent.id',value:'${menu.parent == null ? '':menu.parent.id}',labelValue:'${menu.parent == null ? '':menu.parent.name}',labelName:'parent.name',title:'上级菜单',extId:'${menu.id}',placeholder:'请选择上级菜单'}|">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称<font
+                    class="glad_star">&nbsp;*</font>&nbsp;:</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" name="name" th:value="${menu.name}" lay-verify="required" placeholder="名称"
+                       style="width: 250px;">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">类型:</label>
+            <div class="layui-input-block">
+                <input type="radio" th:field="*{menu.type}" name="type" value="1" title="目录">
+                <input type="radio" th:field="*{menu.type}" name="type" value="2" title="菜单">
+                <input type="radio" th:field="*{menu.type}" name="type" value="3" title="按钮">
+                <input type="radio" th:field="*{menu.type}" name="type" value="4" title="URL">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">链接:</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" th:value="${menu.href}" name="href" placeholder="链接" style="width: 250px;">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">目标:</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" th:value="${menu.target}" name="target" placeholder="目标" style="width: 250px;">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">图标:</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" th:value="${menu.icon}" id="icon" readonly name="icon"   placeholder="图标" style="width: 250px;">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <input id="ico-btn" class="layui-btn" type="button" value="选择图标">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序:</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" th:value="${menu.sort}" lay-verify="required|number" name="sort" placeholder="排序" style="width: 250px;">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">可见:</label>
+            <div class="layui-input-block">
+                <input type="radio" th:field="*{menu.show}" name="show" value="1" title="显示" checked>
+                <input type="radio" th:field="*{menu.show}" name="show" value="0" title="隐藏">
+
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">权限标识:</label>
+            <div class="layui-input-block">
+                <input type="text" class="layui-input" th:value="${menu.permission}" name="permission" placeholder="权限标识" style="width: 250px;">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">备注:</label>
+                <div class="layui-input-inline">
+                    <textarea placeholder="备注" th:text="${menu.remarks}" name="remarks" class="layui-textarea" style="width: 250px;"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn"  shiro:hasPermission="sys:menu:update" lay-submit="" lay-filter="add">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<div th:include="include :: footer"></div>
+<script type="text/javascript" th:src="@{/js/appjs/sys/menu/edit.js}"></script>
+</body>
+</html>

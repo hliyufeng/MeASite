@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body style="background: #F0F2F5;">
+<div th:include="include :: treecss"></div>
+<div class="measite-content layui-card">
+    <form class="layui-form" id="sbForm">
+        <div class="layui-form-item">
+            <label class="layui-form-label">归属公司:<font
+                    class="glad_star">&nbsp;*</font>&nbsp;</label>
+            <div class="layui-input-block">
+                <input mea-input='tree'
+                      th:attr="mea-input-param=|{url:'/sys/office/treeData?type=1',name:'company.id',value:'${user.company.id}',labelValue:'${user.company.name}',id:'company',labelName:'company.name',title:'归属公司',placeholder:'请选择归属公司'}|">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <input id="id" type="hidden" name="id" th:value="${user.id}">
+            <label class="layui-form-label">归属部门:<font
+                    class="glad_star">&nbsp;*</font>&nbsp;</label>
+            <div class="layui-input-block">
+                <input mea-input='tree'
+                       th:attr="mea-input-param=|{url:'/sys/office/treeData?type=2',name:'office.id',value:'${user.office.id}',labelValue:'${user.office.name}',id:'office',labelName:'office.name',title:'归属部门',placeholder:'请选择归属部门'}|">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">工号:</label>
+            <div class="layui-input-block">
+                <input class="layui-input" name="no" th:value="${user.no}"  maxlength="50" placeholder="工号"  style="width: 250px;"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名:<font
+                    class="glad_star">&nbsp;*</font>&nbsp;</label>
+            <div class="layui-input-block">
+                <input class="layui-input" name="name" th:value="${user.name}" maxlength="50" lay-verify="required" placeholder="姓名"  style="width: 250px;"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">登录名:<font
+                    class="glad_star">&nbsp;*</font>&nbsp;</label>
+            <div class="layui-input-block">
+                <input id="oldLoginName" name="oldLoginName" type="hidden" th:value="${user.loginName}">
+                <input class="layui-input" name="loginName"  th:value="${user.loginName}" maxlength="50" lay-verify="required|loginname" placeholder="登录名"  style="width: 250px;"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码:<font
+                    class="glad_star" th:if="!${user.id}">&nbsp;*</font>&nbsp;</label>
+            <div class="layui-input-block">
+                <input class="layui-input" type="password" name="newPassword" id="newPassword" minlength="3" maxlength="50" th:if="${user.id}" placeholder="密码"  style="width: 250px;"/>
+                <input class="layui-input" name="newPassword" id="newPassword" minlength="3" maxlength="50" th:if="!${user.id}" lay-verify="required" placeholder="密码"  style="width: 250px;"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认密码:<font th:if="!${user.id}"
+                                                       class="glad_star">&nbsp;*</font>&nbsp;</label>
+            <div class="layui-input-block">
+                <input class="layui-input"   type="password" th:if="${user.id}"  id="confirmNewPassword" name="confirmNewPassword" minlength="3" maxlength="50"  placeholder="确认密码"  style="width: 250px;"/>
+                <input class="layui-input"   type="password" th:if="!${user.id}" lay-verify="required|confirmNewPassword" id="confirmNewPassword" name="confirmNewPassword" minlength="3" maxlength="50"  placeholder="确认密码"  style="width: 250px;"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱:&nbsp;</label>
+            <div class="layui-input-block">
+                <input class="layui-input" type="email"  maxlength="100" th:value="${user.email}" lay-verify="email"  name="email" minlength="3"   placeholder="邮箱"  style="width: 250px;"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">电话:&nbsp;</label>
+            <div class="layui-input-block">
+                <input class="layui-input" type="text" th:value="${user.phone}" maxlength="100"  name="phone" minlength="3"  lay-verify="phone"   placeholder="电话"  style="width: 250px;"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">手机:&nbsp;</label>
+            <div class="layui-input-block">
+                <input class="layui-input" type="text" th:value="${user.mobile}" maxlength="100"  name="mobile" minlength="3"  lay-verify="phone"  placeholder="手机"  style="width: 250px;"/>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否允许登录:&nbsp;</label>
+            <div class="layui-input-block" style="width: 250px;">
+                <select name="loginFlag" >
+                    <option th:each="dict:${sysData}" th:text="${dict.label}" th:value="${dict.value}" ></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户类型:&nbsp;</label>
+            <div class="layui-input-block" style="width: 250px;">
+                <select name="userType" >
+                    <option th:each="dict:${sysUserType}" th:text="${dict.label}" th:value="${dict.value}" ></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户角色:</label>
+            <div class="layui-input-block" style="width: 800px;">
+                <input type="hidden" name="roleIdList" id="roleIdList">
+                <input type="checkbox" th:checked="${role.checked}" name="roleIds" th:each="role:${allRoles}" th:value="${role.id}" th:title="${role.name}" lay-skin="primary">
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">备注:</label>
+                <div class="layui-input-inline">
+                    <textarea placeholder="备注" th:value="${user.remarks}" name="remarks" class="layui-textarea" style="width: 250px;"></textarea>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="layui-form-item" th:if="${user.id}">
+            <div class="layui-inline">
+                <label class="layui-form-label">创建时间:</label>
+                <div class="layui-input-inline">
+                  <span class="measite-span-line" th:text="${user.createStTime}"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item" th:if="${user.id}">
+            <div class="layui-inline">
+                <label class="layui-form-label">最后登陆:</label>
+                <div class="layui-input-inline">
+                    <span class="measite-span-line" th:text="${'IP:' + (user.loginIp == null ? '': user.loginIp) + '&nbsp;&nbsp;&nbsp;&nbsp;时间：'+ (user.loginStTime == null ? '':user.loginStTime)}"></span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button shiro:hasAllPermissions="sys:user:save,sys:user:update" class="layui-btn" lay-submit type="submit" lay-filter="form">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+<div th:include="include :: footer"></div>
+<div th:include="include :: treejs"></div>
+<script type="text/javascript" th:src="@{/js/appjs/sys/user/form.js}"></script>
+</body>
+</html>

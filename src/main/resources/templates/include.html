@@ -1,0 +1,113 @@
+<head th:fragment="header">
+    <meta charset="utf-8">
+    <title>MeASite后台管理模板</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="favicon.ico">
+    <link href="/css/font-awesome.css?v=4.4.0" th:href="@{/css/font-awesome.css?v=4.4.0}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/js/plugins/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_tnyc012u2rlwstt9.css" media="all"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}" media="all"/>
+    <script type="text/javascript" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+</head>
+<div th:fragment="footer">
+    <script th:src="@{/js/plugins/layer/layer.js}"></script>
+    <script type="text/javascript" th:src="@{/js/plugins/layui/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/js/utils/MeA.js}"></script>
+    <script>
+        var responseParam = {
+            statusCode: 200
+        }
+        var requestParam = {
+            pageName: 'pageNum',
+            limitName: 'pageSize'
+        }
+        var layere = null;
+        $(document).ajaxStart(function () {
+            layere = layer.load();
+        }).ajaxSuccess(function(data){
+            if(data.code == 500){
+                layer.msg("稍后再试！我去宇宙了旅行了！");
+            }
+        }).ajaxComplete(function () {
+            if (layere != null) {
+                layer.close(layere);
+                layere = null;
+            }
+        })
+    </script>
+</div>
+<div th:fragment="boostrapTreeCssHeader">
+    <meta charset="utf-8">
+    <title>layui后台管理模板</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="favicon.ico">
+    <link th:href="@{/css/bootstrap.min.css?v=3.3.6}" rel="stylesheet">
+    <link href="/css/font-awesome.css?v=4.4.0" th:href="@{/css/font-awesome.css?v=4.4.0}" rel="stylesheet">
+    <link th:href="@{/css/plugins/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet">
+    <link href="/css/plugins/jsTree/style.min.css" rel="stylesheet">
+    <link href="/css/plugins/jqTreeGrid/jquery.treegrid.css"
+          rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/js/plugins/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_tnyc012u2rlwstt9.css" media="all"/>
+
+    <link rel="stylesheet" th:href="@{/css/main.css}" media="all"/>
+    <script type="text/javascript" th:src="@{/js/jquery.min.js?v=2.1.4}"></script>
+    <script type="text/javascript" th:src="@{/js/utils/MeA.js?v=1.0.0}"></script>
+
+</div>
+<div th:fragment="boostrapTreeJsFooter">
+    <script type="text/javascript" th:src="@{/js/utils/MeA.js}"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script src="/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="/js/plugins/jsTree/jstree.min.js"></script>
+    <script src="/js/plugins/jqTreeGrid/jquery.treegrid.min.js"></script>
+    <script src="/js/plugins/jqTreeGrid/jquery.treegrid.extension.js"></script>
+    <script src="/js/plugins/jqTreeGrid/jquery.treegrid.bootstrap3.js"></script>
+    <script th:src="@{/js/plugins/layer/layer.js}"></script>
+    <script type="text/javascript" th:src="@{/js/plugins/layui/layui.js}"></script>
+    <script>
+        var responseParam = {
+            statusCode: 200
+        }
+        var requestParam = {
+            pageName: 'pageNum',
+            limitName: 'pageSize'
+        }
+        var layere = null;
+        $(document).ajaxStart(function () {
+            layere = layer.load();
+        }).ajaxSuccess(function(data){
+            if(data.code == 500){
+                layer.msg("稍后再试！我去宇宙了旅行了！");
+            }
+        }).ajaxComplete(function () {
+            if (layere != null) {
+                layer.close(layere);
+                layere = null;
+            }
+        })
+    </script>
+</div>
+<!-- jquery tree-->
+<div th:fragment="treecss">
+    <link th:href="@{/js/plugins/jquery-ztree/3.5.34/css/zTreeStyle/zTreeStyle.css}" rel="stylesheet" type="text/css"/>
+</div>
+
+<div th:fragment="treejs">
+    <script th:src="@{/js/plugins/jquery-ztree/3.5.34/js/jquery.ztree.all.js}"></script>
+</div>
+

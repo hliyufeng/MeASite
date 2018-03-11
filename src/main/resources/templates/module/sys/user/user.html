@@ -1,0 +1,70 @@
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body style="background: #F0F2F5;">
+<div class="measite-content-body">
+    <div class="measite-card measite-card-wider-padding measite-card-padding-transition">
+        <div class="measite-card-body">
+            <div class="measite-form">
+                <blockquote class="layui-elem-quote news_search" style="background: #f2f2f2;" shiro:hasPermission="sys:user:list">
+                    <form class="layui-form layui-form-pane" id="searchForm">
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <input mea-input='tree'
+                                       th:attr="mea-input-param=|{url:'/sys/office/treeData?type=1',name:'company.id',id:'company',value:'${user.company == null? '':user.company.id}',labelName:'company.name',title:'归属公司',labelValue:'${user.company == null ?'':user.company.name}',placeholder:'请选择归属公司'}|">
+                            </div>
+                            <div class="layui-input-inline">
+                                <input mea-input='tree'
+                                       th:attr="mea-input-param=|{url:'/sys/office/treeData?type=2',name:'office.id',value:'${user.office == null ? '':user.office.id}',id:'office',labelName:'office.name',title:'归属部门',placeholder:'请选择归属部门',labelValue:'${user.office == null ?'':user.office.name}'}|">
+                            </div>
+                            <div class="layui-input-inline">
+                                <input type="text" name="loginName" placeholder="登录名"
+                                       class="layui-input search_input">
+                            </div>
+                            <div class="layui-input-inline">
+                                <input type="text" name="name" placeholder="姓名" class="layui-input search_input">
+                            </div>
+                            <a class="layui-btn search_btn" id="search">查询</a>
+                            <a class="layui-btn layui-btn-primary" id="clearseach">清空</a>
+                        </div>
+                    </form>
+                </blockquote>
+            </div>
+            <div class="measite-toolbar">
+                <button type="button" shiro:hasPermission="sys:user:add"
+                        class="layui-btn" title="新增" onclick="add()">
+                    <i class="layui-icon">&#xe654;</i>新增
+                </button>
+            </div>
+
+            <div class="measite-conten-body-panel">
+                <div class="layui-row">
+                    <div class="layui-col-md12">
+                        <table id="measitetable" class="layui-hide" lay-filter="measitetoolbarfiter">
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script type="text/javascript">
+    var s_edit_h = 'layui-hide';
+    var s_remove_h = 'layui-hide';
+</script>
+
+<div shiro:hasPermission="sys:user:edit">
+    <script type="text/javascript">
+        s_edit_h = '';
+    </script>
+</div>
+<div shiro:hasPermission="sys:user:delete">
+    <script type="text/javascript">
+        var s_remove_h = '';
+    </script>
+</div>
+<script type="text/javascript" th:src="@{/js/appjs/sys/user/user.js}"></script>
+</body>
+</html>

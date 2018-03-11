@@ -1,0 +1,39 @@
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body style="background: #F0F2F5;">
+<div class="measite-content-body">
+    <div class="measite-card measite-card-wider-padding measite-card-padding-transition">
+        <div class="measite-card-body">
+            <div class="measite-form">
+                <blockquote class="layui-elem-quote news_search" style="background: #f2f2f2;">
+                    <form class="layui-form layui-form-pane" id="searchForm">
+                        <div class="layui-inline">
+                            <a class="layui-btn search_btn" href="javascript:;" onClick="clearCache('dict')">清除字典缓存</a>
+                            <a class="layui-btn" onclick="clearCache('')">清除所有缓存</a>
+                        </div>
+                    </form>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+    <div th:include="include :: footer"></div>
+</div>
+<script type="text/javascript">
+      function clearCache(type){
+          console.log(type)
+          $.ajax({
+              url: "/sys/clealAll",
+              type: "post",
+              data:{type:type},
+              success: function (data) {
+                  if(data.code == 200){
+                      layer.msg("清除成功")
+                  }
+              }
+          });
+      }
+</script>
+</body>
+</html>

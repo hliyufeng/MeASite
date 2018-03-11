@@ -1,0 +1,69 @@
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<meta charset="utf-8">
+<head th:include="include :: header"></head>
+<body style="background: #F0F2F5;">
+<div class="measite-content-body">
+    <div class="measite-card measite-card-wider-padding measite-card-padding-transition">
+        <div class="measite-card-body">
+            <div class="measite-form">
+                <blockquote class="layui-elem-quote news_search" style="background: #f2f2f2;" shiro:hasPermission="sys:dict:list">
+                    <form class="layui-form layui-form-pane" id="searchForm">
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <label class="layui-form-label">类型</label>
+                                <div class="layui-input-block">
+                                    <select name="type" id="type">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-input-inline">
+                                <input type="text" name="description" placeholder="描述" class="layui-input search_input">
+                            </div>
+                            <a class="layui-btn search_btn" id="search">查询</a>
+                        </div>
+                    </form>
+                </blockquote>
+            </div>
+            <div class="measite-toolbar">
+                <button type="button" shiro:hasPermission="sys:dict:add"
+                        class="layui-btn" title="在根节点下添加菜单" onclick="add()">
+                    <i class="layui-icon">&#xe654;</i>新增
+                </button>
+            </div>
+            <div class="measite-conten-body-panel">
+                <table id="measiteTable" lay-filter="measitetoolbarfiter">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="include :: footer"></div>
+<script type="text/javascript">
+    var s_add_h = 'layui-hide';
+    var s_edit_h = 'layui-hide';
+    var s_remove_h = 'layui-hide';
+</script>
+<div shiro:hasPermission="sys:dict:add">
+    <script type="text/javascript">
+        s_add_h = '';
+    </script>
+</div>
+<div shiro:hasPermission="sys:dict:edit">
+    <script type="text/javascript">
+        s_edit_h = '';
+    </script>
+</div>
+<div shiro:hasPermission="sys:dict:delete">
+    <script type="text/javascript">
+        var s_remove_h = '';
+    </script>
+
+<script type="text/html" id="operationTpl">
+    <a class="layui-btn layui-btn-normal layui-btn-sm " lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
+    <a class="layui-btn  layui-btn-danger layui-btn-sm" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
+    <a class="layui-btn layui-btn-warm layui-btn-sm" lay-event="add"><i class="layui-icon">&#xe654;</i></a>
+</script>
+<script type="text/javascript" th:src="@{/js/appjs/sys/dict/dict.js}"></script>
+</body>
+</html>
