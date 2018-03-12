@@ -2,19 +2,22 @@ package com.mea.site.common.base.controller;
 
 import com.mea.site.common.response.ResponseEntity;
 import com.mea.site.common.support.status.HttpCode;
+import com.mea.site.common.utils.WebUtils;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 /**
  * Created by Michael Jou on 2018/3/4. 2:12
  */
-@RestControllerAdvice
+@ControllerAdvice
 public class GlobalControllerExceptionHandler {
 
+    @ExceptionHandler(value = { UnauthorizedException.class })
+    public String UnauthorizedException(){
+        return WebUtils.redirect("/403");
+    }
 
     /**
      * 服务器异常

@@ -62,7 +62,8 @@ public class IndexController extends BaseController {
     String error403(HttpServletRequest request,HttpServletResponse response) {
           if(WebUtils.isAjax(request)){
               WebUtils.writeJson(response,JSON.toJSONString(ResponseEntity.build().OK(403)));
+              return "";
           }
-        return "403";
+        return "error/403";
     }
 }
