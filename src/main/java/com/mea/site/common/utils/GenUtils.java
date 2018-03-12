@@ -39,7 +39,6 @@ public class GenUtils {
         templates.add("gen/Mapper.xml.vm");
         templates.add("gen/add.html.vm");
         templates.add("gen/add.js.vm");
-        templates.add("gen/Controller.java.vm");
         templates.add("gen/edit.html.vm");
         templates.add("gen/edit.js.vm");
         templates.add("gen/list.html.vm");
@@ -231,7 +230,10 @@ public class GenUtils {
                     + "appjs" + File.separator + packageName + File.separator + classname + File.separator + "edit.js";
         }
 
-
+        if (template.contains("add.html.vm")) {
+            return "main" + File.separator + "resources" + File.separator + "templates" + File.separator
+                    + packageName + File.separator + classname + File.separator + "add.html";
+        }
         return null;
     }
 }

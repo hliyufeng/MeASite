@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache name="defaultCache" updateCheck="false">
 
-	<diskStore path="java.io.tmpdir/crm/Tmp_EhCache"/>
+	<diskStore path="java.io.tmpdir/measite/Tmp_EhCache"/>
 
 	<!--
        name:缓存名称。
