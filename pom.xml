@@ -63,6 +63,7 @@
         <mapper-spring-boot-starter.version>1.2.3</mapper-spring-boot-starter.version>
         <springloaded.version>1.2.7.RELEASE</springloaded.version>
         <okhttp.version>3.10.0</okhttp.version>
+        <dubbo.boot.version>0.1.0</dubbo.boot.version>
     </properties>
     <dependencies>
         <dependency>
@@ -313,6 +314,12 @@
             <artifactId>okhttp</artifactId>
             <version>${okhttp.version}</version>
         </dependency>
+        <!--dubbo-->
+        <dependency>
+            <groupId>com.alibaba.boot</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+            <version>${dubbo.boot.version}</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>measite-manage</finalName>
@@ -438,7 +445,13 @@
                 <redis.pool.min-idle>8</redis.pool.min-idle>
                 <redis.pool.max-active>100</redis.pool.max-active>
                 <redis.pool.max-wait>-1</redis.pool.max-wait>
-                <glad.uploadPath>D:/var/uploaded_files/</glad.uploadPath>
+                <mea.uploadPath>D:/var/uploaded_files/</mea.uploadPath>
+                <dubbo.application.id>CRM-CONSUMER</dubbo.application.id>
+                <dubbo.application.name>CRM-CONSUMER</dubbo.application.name>
+                <dubbo.registry.address>zookeeper://localhost:2181</dubbo.registry.address>
+                <dubbo.registry.port>20884</dubbo.registry.port>
+                <dubbo.registry.check>false</dubbo.registry.check>
+                <dubbo.registry.timeout>600000</dubbo.registry.timeout>
                 <logging.level>debug</logging.level>
                 <logging.path>E://log</logging.path>
                 <http.multipart.max-file-size>30Mb</http.multipart.max-file-size>
@@ -488,7 +501,13 @@
                 <redis.pool.min-idle>8</redis.pool.min-idle>
                 <redis.pool.max-active>100</redis.pool.max-active>
                 <redis.pool.max-wait>-1</redis.pool.max-wait>
-                <glad.uploadPath>D:/var/uploaded_files/</glad.uploadPath>
+                <mea.uploadPath>D:/var/uploaded_files/</mea.uploadPath>
+                <dubbo.application.id>CRM-CONSUMER</dubbo.application.id>
+                <dubbo.application.name>CRM-CONSUMER</dubbo.application.name>
+                <dubbo.registry.address>zookeeper://localhost:2181</dubbo.registry.address>
+                <dubbo.registry.port>20884</dubbo.registry.port>
+                <dubbo.registry.check>false</dubbo.registry.check>
+                <dubbo.registry.timeout>600000</dubbo.registry.timeout>
                 <logging.level>info</logging.level>
                 <logging.path>E://log</logging.path>
                 <http.multipart.max-file-size>30Mb</http.multipart.max-file-size>
@@ -538,7 +557,13 @@
                 <redis.pool.min-idle>8</redis.pool.min-idle>
                 <redis.pool.max-active>100</redis.pool.max-active>
                 <redis.pool.max-wait>-1</redis.pool.max-wait>
-                <glad.uploadPath>D:/var/uploaded_files/</glad.uploadPath>
+                <mea.uploadPath>D:/var/uploaded_files/</mea.uploadPath>
+                <dubbo.application.id>CRM-CONSUMER</dubbo.application.id>
+                <dubbo.application.name>CRM-CONSUMER</dubbo.application.name>
+                <dubbo.registry.address>zookeeper://localhost:2181</dubbo.registry.address>
+                <dubbo.registry.port>20884</dubbo.registry.port>
+                <dubbo.registry.check>false</dubbo.registry.check>
+                <dubbo.registry.timeout>600000</dubbo.registry.timeout>
                 <logging.level>debug</logging.level>
                 <logging.path>E://log</logging.path>
                 <http.multipart.max-file-size>30Mb</http.multipart.max-file-size>

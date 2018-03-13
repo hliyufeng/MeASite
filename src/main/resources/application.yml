@@ -87,8 +87,17 @@ mapper:
   mappers:
         - com.mea.site.common.base.mapper.BaseMapper
 mea:
-  uploadPath: $[glad.uploadPath]
+  uploadPath: $[mea.uploadPath]
 logging:
   level:
     com.mea.site: $[logging.level]
   path: $[logging.path]
+dubbo:
+  application:
+    id: $[dubbo.application.id]
+    name: $[dubbo.application.name]
+  registry:
+    address: $[dubbo.registry.address]
+    port: $[dubbo.registry.port]
+    check: $[dubbo.registry.check]
+    timeout: $[dubbo.registry.timeout]
